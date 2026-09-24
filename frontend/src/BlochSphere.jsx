@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useMemo } from "react";
+import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
-import { Line, OrbitControls, Text, Billboard } from "@react-three/drei";
+import { Line, OrbitControls, Text, Billboard } from "@react-three/drei"; // Billboard still used by Axes
 
 const canvasStyle = {
-  width: "700px",
-  height: "700px",
+  width: "100%",
+  height: "100%",
 };
 
-function Cone( { position, rotation, color} ) {
+function Cone({ position, rotation, color }) {
   return (
     <mesh position={position} rotation={rotation}>
       <coneGeometry args={[0.03, 0.08, 50]} />
@@ -16,18 +17,87 @@ function Cone( { position, rotation, color} ) {
   );
 }
 
-function Sphere () {
+function Sphere() {
   return (
-    <mesh>
-      <sphereGeometry args={[1, 64, 64]} />
-      <meshStandardMaterial color="#2d2dd4" wireframe={true} />
-    </mesh>
+    <group>
+      {/* Outer Wireframe Sphere */}
+      <mesh>
+        <sphereGeometry args={[1, 64, 64]} />
+        <meshStandardMaterial color="#2d2dd4" wireframe={true} opacity={0.65} transparent={true} />
+      </mesh>
+      {/* Subtle translucent core for depth */}
+      <mesh>
+        <sphereGeometry args={[0.995, 32, 32]} />
+        <meshStandardMaterial
+          color="#0d1b3e"
+          transparent={true}
+          opacity={0.25}
+          roughness={0.8}
+        />
+      </mesh>
+    </group>
+  );
+}
+
+// Arrow representing the Qubit state vector pointing from origin (0, 0, 0)
+function QubitArrow({ dir = [0, 0, 1], color = "#ffd700" }) {
+  const { quaternion } = useMemo(() => {
+    const v = new THREE.Vector3(...dir).normalize();
+    // In Three.js, a default cylinder / cone is oriented along the Y axis (0, 1, 0)
+    const q = new THREE.Quaternion().setFromUnitVectors(
+      new THREE.Vector3(0, 1, 0),
+      v
+    );
+    return { quaternion: q };
+  }, [dir]);
+
+  return (
+    <group>
+      {/* Arrow oriented in direction dir */}
+      <group quaternion={quaternion}>
+        {/* Origin base sphere */}
+        <mesh position={[0, 0, 0]}>
+          <sphereGeometry args={[0.04, 32, 32]} />
+          <meshStandardMaterial
+            color={color}
+            emissive={color}
+            emissiveIntensity={0.6}
+            metalness={0.5}
+            roughness={0.2}
+          />
+        </mesh>
+
+        {/* Arrow shaft (cylinder) */}
+        <mesh position={[0, 0.41, 0]}>
+          <cylinderGeometry args={[0.016, 0.016, 0.82, 32]} />
+          <meshStandardMaterial
+            color={color}
+            emissive={color}
+            emissiveIntensity={0.5}
+            metalness={0.4}
+            roughness={0.2}
+          />
+        </mesh>
+
+        {/* Arrow head (cone pointing towards radius 1.0) */}
+        <mesh position={[0, 0.91, 0]}>
+          <coneGeometry args={[0.048, 0.18, 32]} />
+          <meshStandardMaterial
+            color={color}
+            emissive={color}
+            emissiveIntensity={0.8}
+            metalness={0.6}
+            roughness={0.1}
+          />
+        </mesh>
+      </group>
+
+    </group>
   );
 }
 
 function Axes() {
-
-    const labelProps = {
+  const labelProps = {
     fontSize: 0.07,
     color: "white",
     anchorX: "center",
@@ -38,9 +108,6 @@ function Axes() {
     <>
       {/* X axis — red */}
       <Line points={[[-1, 0, 0], [1, 0, 0]]} color="red" lineWidth={3} />
-      {/*<Cone position={[1.2, 0, 0]}  rotation={[0, 0, -Math.PI / 2]} color="red" />
-      <Cone position={[-1.2, 0, 0]} rotation={[0, 0, Math.PI / 2]}  color="red" />*/}
-
       <Billboard position={[1.2, 0, 0]}>
         <Text {...labelProps}>X|+⟩</Text>
       </Billboard>
@@ -50,9 +117,6 @@ function Axes() {
 
       {/* Y axis — green */}
       <Line points={[[0, -1, 0], [0, 1, 0]]} color="green" lineWidth={3} />
-      {/*<Cone position={[0, 1.2, 0]}  rotation={[0, 0, 0]}         color="green" />
-      <Cone position={[0, -1.2, 0]} rotation={[Math.PI, 0, 0]}   color="green" />*/}
-
       <Billboard position={[0, 1.2, 0]}>
         <Text {...labelProps}>Y|+i⟩</Text>
       </Billboard>
@@ -60,37 +124,35 @@ function Axes() {
         <Text {...labelProps}>|-i⟩</Text>
       </Billboard>
 
-      {/* Z axis — blue */}
+      {/* Z axis — blue/white */}
       <Line points={[[0, 0, -1], [0, 0, 1]]} color="white" lineWidth={3} />
-      {/*<Cone position={[0, 0, 1.2]}  rotation={[Math.PI / 2, 0, 0]}  color="white" />
-      <Cone position={[0, 0, -1.2]} rotation={[-Math.PI / 2, 0, 0]} color="white" />*/}
-
-      <Billboard position={[0, 0, 1.2]}>
+      <Billboard position={[0, 0, 1.25]}>
         <Text {...labelProps}>Z|0⟩</Text>
       </Billboard>
-      <Billboard position={[0, 0, -1.2]}>
+      <Billboard position={[0, 0, -1.25]}>
         <Text {...labelProps}>|1⟩</Text>
       </Billboard>
-
     </>
   );
 }
 
-function BlochSphere() {
+function BlochSphere({ stateVector = [0, 0, 1] }) {
   return (
     <div style={canvasStyle}>
-      <Canvas camera={{ position: [2, 2, 2], fov: 60 }}>
-        <ambientLight intensity={0.7} />
-        <pointLight position={[10, 10, 10]} intensity={1} />
+      <Canvas camera={{ position: [2.5, 2.5, -2.5], fov: 48 }}>
+        <ambientLight intensity={0.8} />
+        <pointLight position={[10, 10, 10]} intensity={1.2} />
+        <pointLight position={[-10, -10, -10]} intensity={0.5} color="#4a90e2" />
 
         <Sphere />
 
         <group rotation={[-Math.PI / 2, 0, 0]}>
           <Axes />
+          {/* Qubit state vector arrow pointing to current state */}
+          <QubitArrow dir={stateVector} />
         </group>
 
-
-        <OrbitControls enableZoom={true} minDistance={2.5} maxDistance={3} />
+        <OrbitControls enableZoom={true} minDistance={3.2} maxDistance={4.5} />
       </Canvas>
     </div>
   );

@@ -1,16 +1,60 @@
-# React + Vite
+# Quantum Bloch Sphere Simulator — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite single-page application that renders the interactive Bloch sphere,
+quantum gate controls, and the step-by-step matrix math breakdown.
 
-Currently, two official plugins are available:
+For the full project overview, screenshots, and contribution guide, see the
+[root README](../README.md).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Quick Start
 
-## React Compiler
+```bash
+npm install     # install dependencies
+npm run dev     # start the dev server (default: http://localhost:5173)
+npm run verify  # independently verify the taught gate and rotation math
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Scripts
 
-## Expanding the ESLint configuration
+| Command           | Description                              |
+| ----------------- | ---------------------------------------- |
+| `npm run dev`     | Start the Vite development server        |
+| `npm run build`   | Produce a production build in `dist/`    |
+| `npm run preview` | Preview the production build locally     |
+| `npm run lint`    | Run ESLint over the source files         |
+| `npm run verify`  | Verify canonical gate and rotation math  |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Source Layout
+
+| File                   | Purpose                                                            |
+| ---------------------- | ------------------------------------------------------------------ |
+| `src/App.jsx`          | App shell, qubit state machine, gate transition map, math history  |
+| `src/BlochSphere.jsx`  | Three.js / React Three Fiber Bloch sphere, axes, and state arrow   |
+| `src/MatricesModal.jsx`| Pop-up reference: state vectors, density matrices, gate matrices   |
+| `src/TextbookMatrix.jsx`| Renders bracketed textbook-style matrices with optional scalars   |
+| `src/App.css`          | All panel, matrix, modal, and tracker styling                      |
+| `scripts/verify-pauli-gates.mjs` | `npm run verify` — checks displayed matrices vs their formulas |
+
+
+> **Note:** The Bloch sphere axes group is intentionally rotated −90° about X
+> in `BlochSphere.jsx` so that the Three.js default sphere orientation matches
+> the standard Bloch-sphere convention (|0⟩ at +Z north pole, |+⟩ at +X, |+i⟩
+> at +Y). Do not change this rotation.
+
+## Notation & Conventions
+
+- **Buttons display their true textbook matrix.** Each gate button shows the
+  matrix that is actually applied, with its general formula printed beside it
+  (`Rx(θ) = cos(θ/2)I − i·sin(θ/2)σx`, `Ry(θ) = cos(θ/2)I − i·sin(θ/2)σy`,
+  `Rz(θ) = diag(e^{−iθ/2}, e^{iθ/2})`). Never display a different matrix than
+  the one being applied, even if the two agree up to a global phase.
+- **`Rz(±π/2)` is not `S`/`S†`.** `S = diag(1, i) = e^{iπ/4}·Rz(π/2)`. The Rz
+  buttons carry the exact phase-factor matrices; `S` keeps its own matrix. The
+  calculation panel reports the `e^{∓iπ/4}` global phase for Rz steps, the same
+  way it does for Hadamard on `|±i⟩` and Pauli-Y on `|-i⟩`.
+- **Global phases are labelled with exact symbols**, never decimals:
+  `e^{iπ/4}`, `e^{-i3π/4}`, `-1 ( = e^{iπ} )`, and so on.
+- **`npm run verify` enforces all of the above.** It parses the displayed
+  matrices out of `src/App.jsx` and fails the build if any button's matrix
+  stops matching its formula, so run it before committing math changes.
+
