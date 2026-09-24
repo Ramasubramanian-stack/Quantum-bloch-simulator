@@ -1,162 +1,157 @@
 # ⚛️ Quantum Bloch Sphere Simulator
 
-An interactive, beginner-friendly web app for learning **single-qubit quantum
-computing** through the **Bloch sphere** — with every gate application broken
-down into its exact matrix mathematics, step by step.
+[![Deploy Quantum Bloch Simulator to GitHub Pages](https://github.com/Ramasubramanian-stack/Quantum-bloch-simulator/actions/workflows/deploy.yml/badge.svg)](https://github.com/Ramasubramanian-stack/Quantum-bloch-simulator/actions/workflows/deploy.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-teal.svg)](LICENSE)
 
-Built for students and newcomers who want to *see* what a quantum gate
-actually does, both geometrically on the sphere and algebraically as matrix
-multiplication.
+> **Live Interactive Web App**: **[https://ramasubramanian-stack.github.io/Quantum-bloch-simulator/](https://ramasubramanian-stack.github.io/Quantum-bloch-simulator/)**  
+> *(Hosted directly on GitHub Pages — open in any modern browser to rotate the sphere and apply quantum gates live!)*
 
 ---
 
-## ✨ Features
+## 🌟 Why We Built This: A Bridge for Quantum Beginners
 
-- **Interactive 3D Bloch Sphere** — orbit, zoom, and watch the qubit state
-  vector (gold arrow) jump between the 6 cardinal states in real time.
-- **6 Cardinal Qubit States** — `|0⟩`, `|1⟩`, `|+⟩`, `|-⟩`, `|+i⟩`, `|-i⟩`
-  positioned at ±Z, ±X, ±Y exactly as in textbook quantum mechanics
-  (|0⟩ at the +Z north pole).
-- **Quantum Gates** — Hadamard (**H**), Pauli-X (**σₓ**), Pauli-Y (**σᵧ**),
-  Pauli-Z (**σ_z**), and the S phase gate, each displayed with its unitary matrix.
-- **Default-Axis Rotations** — exact ±π/2 rotations about the X, Y, and Z axes.
-  Every rotation button displays its true textbook matrix
-  (`Rx(θ) = cos(θ/2)I − i·sin(θ/2)σx`, likewise for Y, and
-  `Rz(θ) = diag(e^{−iθ/2}, e^{iθ/2})`), with the general formula printed
-  beside the button — so no button ever shows a matrix that disagrees with
-  the reference window. Where a raw product differs from the physical state
-  by a global phase (e.g. `Rz(π/2)` versus `S`), the calculation panel
-  states that phase explicitly instead of hiding it.
-- **Step-by-Step Math Breakdown** — every gate application appends a new
-  calculation *below* the previous one in the scrollable math panel:
-  gate matrix × input state vector = resulting vector = resulting state.
-  Nothing is overwritten; the full history of up to 12 steps stays visible.
-- **12-Operation Sequence Limit** — keeps the calculation panel readable; a
-  reset starts a fresh worked example.
-- **Gate Sequence Summary** — the middle panel shows the applied operations, e.g.
-  `|0⟩ —H→ —Px→ |1⟩`.
-- **Matrices Reference Modal** — a pop-up cheat sheet with state vectors,
-  density matrices (`ρ = |ψ⟩⟨ψ|`), Pauli operators, standard gates, and the
-  general `|ψ(θ, φ)⟩` parameterization.
-- **Quantum Gates Reference Window** — inside the MATRICES modal: for Rx, Ry,
-  and Rz the exact algebraic formula (typeset with KaTeX), directly followed by
-  the θ = ±π/2 matrices the simulator buttons actually apply, plus a short
-  "Why it works" note connecting the two — formula first, numbers second.
-- **Physically Verified Math** — `npm run verify` parses the matrices the UI
-  actually displays out of `src/App.jsx`, compares them exactly against the
-  analytic rotation formulas, then checks all 66 gate × cardinal-state
-  actions for unit norm and equality up to global phase (94 checks,
-  including unitarity and the `S = e^{iπ/4}·Rz(π/2)` relations).
+Quantum mechanics and quantum computing are notoriously counter-intuitive for newcomers. Beginners usually encounter two distinct, disconnected worlds:
+1. **Abstract linear algebra**: $2 \times 2$ unitary matrices, state vectors in complex Hilbert space $\mathbb{C}^2$, and symbols like $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$ that feel disconnected from physical reality.
+2. **Abstract analogies**: Popular explanations like "a qubit is both 0 and 1 at the same time", which obscure the actual mathematical rules and make quantum computing seem mystical rather than computational.
 
-## 🖥️ Interface Overview
+### Why This Tool is Built Specifically for Beginners
+- **Visual + Algebraic Connection**: The Bloch sphere is the standard geometric representation of a 2-level quantum system. This simulator links every geometric rotation of the state vector directly to its **step-by-step matrix multiplication**.
+- **No Hidden Steps**: Unlike simulators that jump from input to output with a black-box result, this app explicitly logs:
+  $$\text{Gate Matrix } U \times \text{State Vector } |\psi_{\text{in}}\rangle = \text{Exact Multiplication} = \text{Resulting State } |\psi_{\text{out}}\rangle$$
+- **History Trail That Never Overwrites**: When learning, you need to see how you arrived at a state. The Math Breakdown panel stacks each operation vertically so you can trace your entire gate sequence (up to 12 steps).
+- **Exact Textbook Math, Never Rounded**: Rotation matrices like $R_x(\pm\pi/2)$, $R_y(\pm\pi/2)$, and $R_z(\pm\pi/2)$ are computed and displayed using exact radicals ($1/\sqrt{2}$) and complex phase terms ($e^{\pm i\pi/4}$), with zero rounding artifacts.
+- **Global Phase Transparency**: Beginners often get confused why $R_z(\pi/2)$ and the $S$ gate produce identical state arrows on the Bloch sphere despite having different diagonal elements. The app explains the global phase factor ($e^{-i\pi/4}$) clearly instead of silently sweeping it under the rug.
 
-| Panel        | Contents                                                        |
-| ------------ | --------------------------------------------------------------- |
-| **Left**     | 3D Bloch sphere + MATRICES reference button                     |
-| **Middle**   | Step tracker, sequence trail, and gate buttons with matrices    |
-| **Right**    | Scrollable "Math Breakdown": initial state + full step history  |
+---
 
-## 🚀 Getting Started
+## 🧭 Core Quantum Concepts Explained
 
-### Prerequisites
+### 1. The Single Qubit State Vector
+In classical computing, a bit is strictly $0$ or $1$. A single qubit exists as a pure quantum state in a 2D complex Hilbert space:
+$$|\psi\rangle = \alpha|0\rangle + \beta|1\rangle = \begin{pmatrix} \alpha \\ \beta \end{pmatrix}$$
+where $\alpha, \beta \in \mathbb{C}$ and $|\alpha|^2 + |\beta|^2 = 1$ (the total probability must equal 1).
 
-- [Node.js](https://nodejs.org/) **v18 or newer** (v20+ recommended)
-- npm (bundled with Node.js)
+### 2. The Bloch Sphere Representation
+Because an overall global phase $e^{i\gamma}$ has no physically measurable consequence ($|\psi\rangle \sim e^{i\gamma}|\psi\rangle$), any pure single-qubit state can be written using two real angles $\theta \in [0, \pi]$ and $\phi \in [0, 2\pi)$:
+$$|\psi(\theta, \phi)\rangle = \cos\left(\frac{\theta}{2}\right)|0\rangle + e^{i\phi}\sin\left(\frac{\theta}{2}\right)|1\rangle$$
 
-### Installation & Run
+This maps directly to a point $(x, y, z)$ on the unit 3D sphere:
+$$x = \sin\theta \cos\phi, \quad y = \sin\theta \sin\phi, \quad z = \cos\theta$$
+
+
+
+
+### 3. The 6 Cardinal States
+The simulator tracks and identifies the fundamental cardinal states on the sphere's poles and equator:
+- **$|0\rangle = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$**: North pole ($+Z$). The default ground state.
+- **$|1\rangle = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$**: South pole ($-Z$). The excited state.
+- **$|+\rangle = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \end{pmatrix}$**: $+X$ axis. Equal superposition state (eigenstate of Pauli-X).
+- **$|-\rangle = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ -1 \end{pmatrix}$**: $-X$ axis. Superposition with a $\pi$ phase difference.
+- **$|+i\rangle = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ i \end{pmatrix}$**: $+Y$ axis. Circular phase state (eigenstate of Pauli-Y).
+- **$|-i\rangle = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ -i \end{pmatrix}$**: $-Y$ axis. Opposite circular phase state.
+
+### 4. Quantum Gates as Rotations
+Quantum logic gates are $2 \times 2$ unitary operators ($U^\dagger U = I$) that preserve the length of the state vector:
+- **Hadamard ($H$)**: Creates equal superposition from basis states; reflects across the $X+Z$ diagonal.
+- **Pauli-X ($\sigma_x$)**: Bit-flip gate; $180^\circ$ rotation around the $X$ axis ($|0\rangle \leftrightarrow |1\rangle$).
+- **Pauli-Y ($\sigma_y$)**: Bit-and-phase-flip; $180^\circ$ rotation around the $Y$ axis ($|0\rangle \leftrightarrow i|1\rangle$).
+- **Pauli-Z ($\sigma_z$)**: Phase-flip gate; $180^\circ$ rotation around the $Z$ axis ($|+\rangle \leftrightarrow |-\rangle$).
+- **Phase Gate ($S$)**: Quarter-turn ($90^\circ$) rotation around the $Z$ axis ($S = \text{diag}(1, i)$).
+- **Axis Rotations ($R_x, R_y, R_z$)**: Exact continuous rotations generated by the Pauli matrices:
+  $$R_n(\theta) = \exp\left(-i\frac{\theta}{2}\vec{n}\cdot\vec{\sigma}\right) = \cos\left(\frac{\theta}{2}\right)I - i\sin\left(\frac{\theta}{2}\right)(\vec{n}\cdot\vec{\sigma})$$
+
+---
+
+## 🖥️ Interactive Interface Tour
+
+```
+┌───────────────────────────┬───────────────────────────────┬────────────────────────────────┐
+│      3D BLOCH SPHERE      │     QUANTUM GATES PANEL       │     STEP-BY-STEP MATH LOG      │
+│                           │                               │                                │
+│   • Orbit, zoom, pan 3D   │   • Applied sequence trail    │   • Scrollable step history    │
+│   • Colored axes (X,Y,Z)  │   • Standard gates (H,X,Y,Z,S)│   • Input state vector         │
+│   • Gold state vector     │   • Exact rotation buttons    │   • Gate unitary matrix        │
+│   • [MATRICES] reference  │   • Reset & step counters     │   • Worked out multiplication  │
+│     modal launcher        │                               │   • Resulting state & vector   │
+└───────────────────────────┴───────────────────────────────┴────────────────────────────────┘
+```
+
+1. **Left Panel — 3D Bloch Sphere**: Orbit around the sphere with your mouse or finger, view the cardinal axes, and watch the gold state-vector arrow update instantly. Click **MATRICES** to open the comprehensive formula reference sheet.
+2. **Middle Panel — Quantum Gates**: Clearly lists the applied sequence trail (`|0⟩ —H→ |+⟩ —Rz→ ...`) and provides buttons with their unitary matrices for $H$, $\sigma_x$, $\sigma_y$, $\sigma_z$, $S$, and $\pm\pi/2$ rotations around $X$, $Y$, and $Z$.
+3. **Right Panel — Math Breakdown**: The worked-out algebraic derivation for every single click, showing exact inputs, matrix multiplication, and final state labels.
+
+---
+
+## 🔬 Mathematical Verification Suite
+
+To guarantee that the simulator is 100% faithful to textbook quantum mechanics:
+- Every gate matrix displayed on the screen is dynamically extracted from source code.
+- Checked against analytical formulas for exact matrix equality.
+- Evaluated across **all 66 gate $\times$ cardinal-state transitions** for unit norm and fidelity up to global phase.
+- Passes all **94 mathematical checks**:
+  ```bash
+  cd frontend
+  npm run verify
+  # ✔ Displayed gate matrices match their analytic formulas exactly (11 gates).
+  # ✔ 66 gate × cardinal-state transitions verified up to global phase.
+  # ✔ All displayed matrices are unitary; S = e^{iπ/4}·Rz(π/2) and S† = e^{-iπ/4}·Rz(-π/2).
+  # 94 checks passed.
+  ```
+
+---
+
+## 💻 Tech Stack & Architecture
+
+- **React 19** + **Vite**: Ultra-fast component lifecycle and build system.
+- **Three.js** + **@react-three/fiber** + **@react-three/drei**: WebGL-accelerated 3D rendering with smooth orbit controls.
+- **react-katex** + **KaTeX**: High-fidelity $\mathrm{\LaTeX}$ mathematical typesetting for matrices and formulas.
+- **Tailwind CSS v4** + **Custom Modular CSS**: High-performance UI styling with strict layer scoping.
+- **GitHub Actions**: Automated CI/CD pipeline deploying each release to GitHub Pages on every push to `main`.
+
+---
+
+## 🚀 Local Development Setup
+
+To run this project locally on your machine:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/<your-username>/quantum-bloch-simulator.git
-cd quantum-bloch-simulator/frontend
+git clone https://github.com/Ramasubramanian-stack/Quantum-bloch-simulator.git
+cd Quantum-bloch-simulator/frontend
 
 # 2. Install dependencies
 npm install
 
-# 3. Start the development server
+# 3. Start local development server
 npm run dev
 ```
 
-Then open the URL printed in the terminal (default: <http://localhost:5173>).
+Visit `http://localhost:5173` in your browser.
 
-### Production Build
-
+### Build and Test Commands
 ```bash
-npm run build     # outputs to frontend/dist/
-npm run preview   # serve the production build locally
-npm run verify    # independently check the taught gate and rotation math
+npm run build     # Compile production bundle into dist/
+npm run preview   # Preview the production build locally
+npm run lint      # Run ESLint across the codebase
+npm run verify    # Run the 94-check quantum math verification suite
 ```
 
-## 🧮 How the Math Works
+---
 
-A single qubit pure state is a unit vector in ℂ²:
+## 🌐 Live Deployment on GitHub Pages
 
-```
-|ψ⟩ = cos(θ/2)|0⟩ + e^(iφ)·sin(θ/2)|1⟩
-```
+The web application is configured with automated GitHub Actions deployment.
 
-which maps to the Bloch vector `(sinθ·cosφ, sinθ·sinφ, cosθ)` on the unit
-sphere. Each gate is a 2×2 unitary matrix; applying it is plain
-matrix–vector multiplication. Example — Hadamard on `|0⟩`:
+- **Production URL**: **[https://ramasubramanian-stack.github.io/Quantum-bloch-simulator/](https://ramasubramanian-stack.github.io/Quantum-bloch-simulator/)**
+- **Deployment Workflow**: `.github/workflows/deploy.yml` runs verification, compiles the static bundle, and publishes to GitHub Pages automatically.
+- **One-time GitHub Setup**:
+  1. In the GitHub repository, navigate to **Settings** $\rightarrow$ **Pages**.
+  2. Under **Build and deployment** $\rightarrow$ **Source**, choose **GitHub Actions**.
+  3. The workflow triggers automatically on push and deploys the live app within ~1 minute!
 
-```
-H|0⟩ = (1/√2) [ 1  1 ] [ 1 ]   = (1/√2) [ 1 ]  = |+⟩
-              [ 1 -1 ] [ 0 ]              [ 1 ]
-```
-
-The simulator performs exactly this calculation for every step and renders
-the input vector, gate matrix, and result in textbook bracket notation.
-
-## 📁 Project Structure
-
-```
-quantum-bloch-simulator/
-├── frontend/                  # React + Vite application (Phase 1 — complete)
-│   ├── src/
-│   │   ├── App.jsx            # State machine, gate transitions, math history
-│   │   ├── BlochSphere.jsx    # 3D sphere, axes, state-vector arrow
-│   │   ├── MatricesModal.jsx  # Reference modal (states, ρ matrices, gates)
-│   │   ├── QuantumGatesReference.jsx # Formula → θ=±π/2 instances → why (Tailwind + KaTeX)
-│   │   ├── TextbookMatrix.jsx # Bracketed matrix renderer
-│   │   └── App.css            # All styling
-│   ├── scripts/
-│   │   └── verify-pauli-gates.mjs  # npm run verify — 94 independent math checks
-│   └── package.json
-├── backend/                   # Planned C++ compute engine (see backend/README.md)
-├── LICENSE                    # MIT
-└── README.md
-```
-
-## 🛠️ Tech Stack
-
-- **React 19** + **Vite** — UI and build tooling
-- **Three.js** + **@react-three/fiber** + **@react-three/drei** — 3D rendering
-- **Tailwind CSS v4** — utilities only (theme + utilities layers; the preflight
-  layer is intentionally excluded so it cannot restyle the app) for the
-  Quantum Gates Reference Window
-- **react-katex** + **KaTeX** — real typeset math (formulas and matrices)
-- Plain CSS (no UI framework) for everything else — simple, hackable styling
-
-## 🗺️ Roadmap
-
-- [ ] Arbitrary-angle rotation gates Rx(θ), Ry(θ), Rz(θ) beyond the exact ±π/2 buttons
-- [ ] Arbitrary (θ, φ) state initialization via sliders
-- [ ] Animated state-vector transitions on the sphere
-- [ ] C++ WebAssembly compute engine (`backend/cpp_engine/`)
-- [ ] Multi-qubit support and entanglement visualization
-
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome!
-
-1. Fork the repo
-2. Create a branch: `git checkout -b feature/your-feature`
-3. Commit your changes: `git commit -m "Add your feature"`
-4. Push and open a Pull Request
-
-Please run `npm run lint` and `npm run build` inside `frontend/` before
-submitting.
+---
 
 ## 📜 License
 
-Distributed under the **MIT License** — see [LICENSE](LICENSE) for details.
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
