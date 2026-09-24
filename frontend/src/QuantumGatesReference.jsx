@@ -29,7 +29,6 @@ const ROTATION_GATES = [
     ],
     why: [
       "For θ = π/2 the half-angle becomes π/4, and since cos(π/4) = sin(π/4) = 1/√2, we factor 1/√2 out front to get the clean matrix above.",
-      "The −i entries are simply sin(π/4) multiplied by −i — no phase is hidden anywhere.",
     ],
   },
   {
@@ -70,27 +69,15 @@ const ROTATION_GATES = [
         For θ = π/2 the half-angle is π/4, so the diagonal entries are exactly{" "}
         <InlineMath math="e^{\pm i\pi/4}" />.
       </>,
-      <>
-        Factoring one phase out gives{" "}
-        <InlineMath math="\mathrm{Rz}(\pi/2) = e^{-i\pi/4}\,\mathrm{S}" /> — the
-        same <InlineMath math="\mathrm{S} = \operatorname{diag}(1, i)" /> gate,
-        up to the <strong>global phase</strong>{" "}
-        <InlineMath math="e^{-i\pi/4}" />, which can never move the Bloch-sphere
-        arrow.
-      </>,
-      "The calculation panel states this phase explicitly on every Rz step instead of hiding it.",
     ],
   },
 ];
 
 function StepBadge({ number, children }) {
   return (
-    <span className="flex items-center gap-2 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[#5eead4]">
-      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[#5eead4]/15 text-[0.6rem] text-[#5eead4]">
-        {number}
-      </span>
-      {children}
-    </span>
+    <h5 className="text-[0.7rem] font-bold uppercase tracking-[0.16em] text-[#5eead4]">
+      {number}. {children}
+    </h5>
   );
 }
 
@@ -153,14 +140,6 @@ export default function QuantumGatesReference() {
         <h3 className="font-mono text-[0.95rem] font-semibold uppercase tracking-[0.15em] text-[#00bfa5]">
           Quantum Gates Reference Window — Rotations
         </h3>
-        <p className="text-[0.78rem] leading-relaxed text-[#94a3b8]">
-          Read top to bottom: the exact algebra first, then the numbers your
-          buttons apply, then why the two are the same thing.
-        </p>
-        <p className="mt-0.5 flex items-start gap-1.5 text-[0.74rem] font-medium text-[#fbbf24]">
-          <span aria-hidden="true">•</span>
-          <span>Nothing is rounded and no phase is silently dropped.</span>
-        </p>
       </header>
 
       <div className="flex flex-col gap-3">
