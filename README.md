@@ -68,17 +68,15 @@ Quantum logic gates are $2 \times 2$ unitary operators ($U^\dagger U = I$) that 
 
 ## 🖥️ Interactive Interface Tour
 
-```
 ┌───────────────────────────┬───────────────────────────────┬────────────────────────────────┐
 │      3D BLOCH SPHERE      │     QUANTUM GATES PANEL       │     STEP-BY-STEP MATH LOG      │
 │                           │                               │                                │
 │   • Orbit, zoom, pan 3D   │   • Applied sequence trail    │   • Scrollable step history    │
 │   • Colored axes (X,Y,Z)  │   • Standard gates (H,X,Y,Z,S)│   • Input state vector         │
 │   • Gold state vector     │   • Exact rotation buttons    │   • Gate unitary matrix        │
-│   • [MATRICES] reference  │   • Reset & step counters     │   • Worked out multiplication  │
+│   • MATRICES reference  │   • Reset & step counters     │   • Worked out multiplication  │
 │     modal launcher        │                               │   • Resulting state & vector   │
 └───────────────────────────┴───────────────────────────────┴────────────────────────────────┘
-```
 
 1. **Left Panel — 3D Bloch Sphere**: Orbit around the sphere with your mouse or finger, view the cardinal axes, and watch the gold state-vector arrow update instantly. Click **MATRICES** to open the comprehensive formula reference sheet.
 2. **Middle Panel — Quantum Gates**: Clearly lists the applied sequence trail (`|0⟩ —H→ |+⟩ —Rz→ ...`) and provides buttons with their unitary matrices for $H$, $\sigma_x$, $\sigma_y$, $\sigma_z$, $S$, and $\pm\pi/2$ rotations around $X$, $Y$, and $Z$.
@@ -102,25 +100,14 @@ To guarantee that the simulator is 100% faithful to textbook quantum mechanics:
   # ✔ 66 gate × cardinal-state transitions verified up to global phase.
   # ✔ All displayed matrices are unitary; S = e^{i\pi/4}\cdot Rz(\pi/2) and S^\dagger = e^{-i\pi/4}\cdot Rz(-\pi/2).
   # 94 checks passed.
-  ```
-
----
-
-## 💻 Tech Stack & Architecture
-
-- **React 19** + **Vite**: Ultra-fast component lifecycle and build system.
-- **Three.js** + **@react-three/fiber** + **@react-three/drei**: WebGL-accelerated 3D rendering with smooth orbit controls.
-- **react-katex** + **KaTeX**: High-fidelity $\mathrm{\LaTeX}$ mathematical typesetting for matrices and formulas.
-- **Tailwind CSS v4** + **Custom Modular CSS**: High-performance UI styling with strict layer scoping.
-- **GitHub Actions**: Automated CI/CD pipeline deploying each release to GitHub Pages on every push to `main`.
-
----
-
-## 🚀 Local Development Setup
-
+💻 Tech Stack & Architecture
+- React 19 + Vite: Ultra-fast component lifecycle and build system.
+- Three.js + @react-three/fiber + @react-three/drei: WebGL-accelerated 3D rendering with smooth orbit controls.
+- react-katex + KaTeX: High-fidelity $\mathrm{\LaTeX}$ mathematical typesetting for matrices and formulas.
+- Tailwind CSS v4 + Custom Modular CSS: High-performance UI styling with strict layer scoping.
+- GitHub Actions: Automated CI/CD pipeline deploying each release to GitHub Pages on every push to main.
+🚀 Local Development Setup
 To run this project locally on your machine:
-
-```bash
 # 1. Clone the repository
 git clone https://github.com/Ramasubramanian-stack/Quantum-bloch-simulator.git
 cd Quantum-bloch-simulator/frontend
@@ -130,34 +117,19 @@ npm install
 
 # 3. Start local development server
 npm run dev
-```
-
-Visit `http://localhost:5173` in your browser.
-
-### Build and Test Commands
-
-```bash
+Visit http://localhost:5173 in your browser.
+Build and Test Commands
 npm run build     # Compile production bundle into dist/
 npm run preview   # Preview the production build locally
 npm run lint      # Run ESLint across the codebase
 npm run verify    # Run the 94-check quantum math verification suite
-```
-
----
-
-## 🌐 Live Deployment on GitHub Pages
-
+🌐 Live Deployment on GitHub Pages
 The web application is configured with automated GitHub Actions deployment.
-
-- **Production URL**: **[https://ramasubramanian-stack.github.io/Quantum-bloch-simulator/](https://ramasubramanian-stack.github.io/Quantum-bloch-simulator/)**
-- **Deployment Workflow**: `.github/workflows/deploy.yml` runs verification, compiles the static bundle, and publishes to GitHub Pages automatically.
-- **One-time GitHub Setup**:
-  1. In the GitHub repository, navigate to **Settings** $\rightarrow$ **Pages**.
-  2. Under **Build and deployment** $\rightarrow$ **Source**, choose **GitHub Actions**.
-  3. The workflow triggers automatically on push and deploys the live app within ~1 minute!
-
----
-
-## 📜 License
-
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+- Production URL: https://ramasubramanian-stack.github.io/Quantum-bloch-simulator/ (https://ramasubramanian-stack.github.io/Quantum-bloch-simulator/)
+- Deployment Workflow: .github/workflows/deploy.yml runs verification, compiles the static bundle, and publishes to GitHub Pages automatically.
+- One-time GitHub Setup:
+1. In the GitHub repository, navigate to Settings $\rightarrow$ Pages.
+2. Under Build and deployment $\rightarrow$ Source, choose GitHub Actions.
+3. The workflow triggers automatically on push and deploys the live app within ~1 minute!
+📜 License
+This project is licensed under the MIT License — see the LICENSE (LICENSE) file for details.
