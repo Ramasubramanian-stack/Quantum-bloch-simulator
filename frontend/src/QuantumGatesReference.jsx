@@ -86,10 +86,10 @@ function RotationGateCard({ gate }) {
     <article className="flex flex-col gap-3 rounded-xl border border-white/10 bg-[#0d1428] p-4 shadow-[0_2px_10px_rgba(0,0,0,0.35)]">
       {/* 1 · General formula (exact algebra) */}
       <header className="flex flex-col gap-2">
-        <StepBadge number="1">General formula</StepBadge>
         <h4 className="font-mono text-sm font-semibold text-[#f1f5f9]">
           {gate.title}
         </h4>
+        <StepBadge number="1">General formula</StepBadge>
         <div className="overflow-x-auto rounded-lg border border-white/5 bg-black/40 px-3 py-2 [&_.katex]:text-[1.05rem] [&_.katex]:text-[#f8fafc]">
           <BlockMath math={gate.general} errorColor="#f87171" />
         </div>
