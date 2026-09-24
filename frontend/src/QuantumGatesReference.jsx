@@ -27,7 +27,10 @@ const ROTATION_GATES = [
         math: String.raw`\frac{1}{\sqrt{2}}\begin{pmatrix} 1 & i \\ i & 1 \end{pmatrix}`,
       },
     ],
-    why: "For θ = π/2 the half-angle becomes π/4, and since cos(π/4) = sin(π/4) = 1/√2, we factor 1/√2 out front to get the clean matrix above. The −i entries are simply sin(π/4) multiplied by −i — no phase is hidden anywhere.",
+    why: [
+      "For θ = π/2 the half-angle becomes π/4, and since cos(π/4) = sin(π/4) = 1/√2, we factor 1/√2 out front to get the clean matrix above.",
+      "The −i entries are simply sin(π/4) multiplied by −i — no phase is hidden anywhere.",
+    ],
   },
   {
     id: "ry",
@@ -43,7 +46,10 @@ const ROTATION_GATES = [
         math: String.raw`\frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ -1 & 1 \end{pmatrix}`,
       },
     ],
-    why: "For θ = π/2, cos(π/4) = sin(π/4) = 1/√2, so again we pull 1/√2 out front. Only the off-diagonal signs differ between +π/2 and −π/2 — that sign flip is what reverses the direction the arrow travels around the Y axis.",
+    why: [
+      "For θ = π/2, cos(π/4) = sin(π/4) = 1/√2, so again we pull 1/√2 out front.",
+      "Only the off-diagonal signs differ between +π/2 and −π/2 — that sign flip is what reverses the direction the arrow travels around the Y axis.",
+    ],
   },
   {
     id: "rz",
@@ -59,18 +65,21 @@ const ROTATION_GATES = [
         math: String.raw`\operatorname{diag}\!\left(e^{i\pi/4},\; e^{-i\pi/4}\right)`,
       },
     ],
-    why: (
+    why: [
       <>
         For θ = π/2 the half-angle is π/4, so the diagonal entries are exactly{" "}
-        <InlineMath math="e^{\pm i\pi/4}" />. Factoring one phase out gives{" "}
+        <InlineMath math="e^{\pm i\pi/4}" />.
+      </>,
+      <>
+        Factoring one phase out gives{" "}
         <InlineMath math="\mathrm{Rz}(\pi/2) = e^{-i\pi/4}\,\mathrm{S}" /> — the
         same <InlineMath math="\mathrm{S} = \operatorname{diag}(1, i)" /> gate,
         up to the <strong>global phase</strong>{" "}
         <InlineMath math="e^{-i\pi/4}" />, which can never move the Bloch-sphere
-        arrow. The calculation panel states this phase explicitly on every Rz
-        step instead of hiding it.
-      </>
-    ),
+        arrow.
+      </>,
+      "The calculation panel states this phase explicitly on every Rz step instead of hiding it.",
+    ],
   },
 ];
 
@@ -122,9 +131,16 @@ function RotationGateCard({ gate }) {
       {/* 3 · Why it works — connects (1) to (2) */}
       <div className="flex flex-col gap-1.5 rounded-lg border-l-2 border-l-[#fbbf24] bg-[#fbbf24]/[0.07] px-3 py-2">
         <StepBadge number="3">Why it works</StepBadge>
-        <p className="text-[0.78rem] leading-relaxed text-[#cbd5e1] [&_.katex]:text-[0.8rem]">
-          {gate.why}
-        </p>
+        <ul className="flex flex-col gap-1.5">
+          {gate.why.map((line, index) => (
+            <li
+              key={index}
+              className="relative pl-4 text-[0.78rem] leading-relaxed text-[#cbd5e1] before:absolute before:left-1 before:top-[0.55em] before:h-1.5 before:w-1.5 before:rounded-full before:bg-[#fbbf24] [&_.katex]:text-[0.8rem]"
+            >
+              {line}
+            </li>
+          ))}
+        </ul>
       </div>
     </article>
   );
@@ -139,8 +155,11 @@ export default function QuantumGatesReference() {
         </h3>
         <p className="text-[0.78rem] leading-relaxed text-[#94a3b8]">
           Read top to bottom: the exact algebra first, then the numbers your
-          buttons apply, then why the two are the same thing. Nothing is rounded
-          and no phase is silently dropped.
+          buttons apply, then why the two are the same thing.
+        </p>
+        <p className="mt-0.5 flex items-start gap-1.5 text-[0.74rem] font-medium text-[#fbbf24]">
+          <span aria-hidden="true">•</span>
+          <span>Nothing is rounded and no phase is silently dropped.</span>
         </p>
       </header>
 
