@@ -12,17 +12,16 @@
 
 Quantum mechanics and quantum computing are notoriously counter-intuitive for newcomers. Beginners usually encounter two disconnected worlds:
 
-1. **Abstract linear algebra**: $2 \times 2$ unitary matrices, state vectors in complex Hilbert space $\mathbb{C}^2$, and symbols like $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$ that feel foreign and abstract.
+1. **Abstract linear algebra**: 2 × 2 unitary matrices, state vectors in complex Hilbert space C², and symbols such as `|ψ⟩ = α|0⟩ + β|1⟩` that feel foreign and abstract.
 2. **Abstract analogies**: Popular explanations like “a qubit is both 0 and 1 at the same time” often hide the actual mathematical rules and make quantum computing seem mystical.
 
 ### Why This Tool Is Built Specifically for Beginners
 
 - **Visual + Algebraic Connection**: The Bloch sphere is the standard geometric representation of a 2-level quantum system. This simulator links every geometric rotation of the state vector directly to the underlying matrix calculation.
-- **No Hidden Steps**: Unlike simulators that jump from input to output with a black-box result, this app explicitly logs:
-  $$\text{Gate Matrix } U \times \text{State Vector } |\psi_{\text{in}}\rangle = |\psi_{\text{out}}\rangle$$
+- **No Hidden Steps**: Unlike simulators that jump from input to output with a black-box result, this app explicitly logs the gate matrix multiplied by the input state vector to produce the output state vector.
 - **History Trail That Never Overwrites**: When learning, you need to see how you arrived at each state. The Math Breakdown panel stacks each operation vertically so you can trace your entire gate sequence.
-- **Exact Textbook Math, Never Rounded**: Rotation matrices like $R_x(\pm\pi/2)$, $R_y(\pm\pi/2)$, and $R_z(\pm\pi/2)$ are computed and displayed using exact radicals ($1/\sqrt{2}$) and complex phases.
-- **Global Phase Transparency**: Beginners often get confused why $R_z(\pi/2)$ and the $S$ gate produce identical state arrows on the Bloch sphere despite having different diagonal elements. The app makes this distinction explicit.
+- **Exact Textbook Math, Never Rounded**: Rotation matrices such as Rₓ(±π/2), Rᵧ(±π/2), and R𝓏(±π/2) are computed and displayed using exact radicals such as 1/√2 and exact complex phases.
+- **Global Phase Transparency**: Beginners often get confused why R𝓏(π/2) and the S gate produce identical state arrows on the Bloch sphere despite having different diagonal elements. The app makes this distinction explicit.
 
 ---
 
@@ -30,54 +29,51 @@ Quantum mechanics and quantum computing are notoriously counter-intuitive for ne
 
 ### 1. The Single Qubit State Vector
 
-In classical computing, a bit is strictly $0$ or $1$. A single qubit exists as a pure quantum state in a 2D complex Hilbert space:
+In classical computing, a bit is strictly 0 or 1. A single qubit exists as a pure quantum state in a 2D complex Hilbert space:
 
-$$
-|\psi\rangle = \alpha|0\rangle + \beta|1\rangle = \begin{pmatrix} \alpha \\ \beta \end{pmatrix}
-$$
+**|ψ⟩ = α|0⟩ + β|1⟩ = [ α, β ]ᵀ**
 
-where $\alpha, \beta \in \mathbb{C}$ and $|\alpha|^2 + |\beta|^2 = 1$ (the total probability must equal 1).
+Here, α and β are complex numbers, and **|α|² + |β|² = 1**. This is the normalization rule: the total probability must equal 1.
 
 ### 2. The Bloch Sphere Representation
 
-Because an overall global phase $e^{i\gamma}$ has no physically measurable consequence ($|\psi\rangle \sim e^{i\gamma}|\psi\rangle$), any pure single-qubit state can be written using two real angles $(\theta, \phi)$:
+Because an overall global phase eⁱᵞ has no physically measurable consequence, states that differ only by this phase represent the same physical state:
 
-$$
-|\psi(\theta, \phi)\rangle = \cos\left(\frac{\theta}{2}\right)|0\rangle + e^{i\phi}\sin\left(\frac{\theta}{2}\right)|1\rangle
-$$
+**|ψ⟩ ≈ eⁱᵞ|ψ⟩**
 
-This maps directly to a point $(x, y, z)$ on the unit 3D sphere:
+Any pure single-qubit state can therefore be written using two real angles, θ and φ:
 
-$$
-x = \sin\theta \cos\phi, \quad y = \sin\theta \sin\phi, \quad z = \cos\theta
-$$
+**|ψ(θ, φ)⟩ = cos(θ/2)|0⟩ + eⁱᵠ sin(θ/2)|1⟩**
+
+This maps directly to a point (x, y, z) on the unit 3D sphere:
+
+- **x = sin(θ) cos(φ)**
+- **y = sin(θ) sin(φ)**
+- **z = cos(θ)**
 
 ### 3. The 6 Cardinal States
 
-The simulator tracks and identifies the fundamental cardinal states on the sphere's poles and equator:
+The simulator tracks and identifies the fundamental cardinal states on the sphere’s poles and equator:
 
-- **$|0\rangle = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$**: North pole ($+Z$). The default ground state.
-- **$|1\rangle = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$**: South pole ($-Z$). The excited state.
-- **$|+\rangle = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \end{pmatrix}$**: $+X$ axis. Equal superposition state (eigenstate of Pauli-$X$).
-- **$|-\rangle = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ -1 \end{pmatrix}$**: $-X$ axis. Superposition with a $\pi$ phase difference.
-- **$|+i\rangle = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ i \end{pmatrix}$**: $+Y$ axis. Circular phase state (eigenstate of Pauli-$Y$).
-- **$|-i\rangle = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ -i \end{pmatrix}$**: $-Y$ axis. Opposite circular phase state.
+- **|0⟩ = [1, 0]ᵀ**: North pole (+Z). The default ground state.
+- **|1⟩ = [0, 1]ᵀ**: South pole (−Z). The excited state.
+- **|+⟩ = (|0⟩ + |1⟩)/√2 = [1, 1]ᵀ/√2**: +X axis. Equal superposition state and eigenstate of Pauli-X.
+- **|−⟩ = (|0⟩ − |1⟩)/√2 = [1, −1]ᵀ/√2**: −X axis. Superposition with a π phase difference.
+- **|+i⟩ = (|0⟩ + i|1⟩)/√2 = [1, i]ᵀ/√2**: +Y axis. Circular phase state and eigenstate of Pauli-Y.
+- **|−i⟩ = (|0⟩ − i|1⟩)/√2 = [1, −i]ᵀ/√2**: −Y axis. Opposite circular phase state.
 
 ### 4. Quantum Gates as Rotations
 
-Quantum logic gates are $2 \times 2$ unitary operators ($U^\dagger U = I$) that preserve the length of the state vector:
+Quantum logic gates are 2 × 2 unitary operators satisfying **U†U = I**. They preserve the length of the state vector:
 
-- **Hadamard ($H$)**: Creates equal superposition from basis states; reflects across the $X+Z$ diagonal.
-- **Pauli-$X$ ($\sigma_x$)**: Bit-flip gate; $180^\circ$ rotation around the $X$ axis ($|0\rangle \leftrightarrow |1\rangle$).
-- **Pauli-$Y$ ($\sigma_y$)**: Bit-and-phase-flip; $180^\circ$ rotation around the $Y$ axis ($|0\rangle \leftrightarrow i|1\rangle$).
-- **Pauli-$Z$ ($\sigma_z$)**: Phase-flip gate; $180^\circ$ rotation around the $Z$ axis ($|+\rangle \leftrightarrow |-\rangle$).
-- **Phase Gate ($S$)**: Quarter-turn ($90^\circ$) rotation around the $Z$ axis ($S = \operatorname{diag}(1, i)$).
-- **Axis Rotations ($R_x, R_y, R_z$)**: Exact continuous rotations generated by the Pauli matrices:
+- **Hadamard (H)**: Creates equal superposition from basis states and reflects across the X + Z diagonal.
+- **Pauli-X (σₓ)**: Bit-flip gate; a 180° rotation around the X axis, exchanging **|0⟩ ↔ |1⟩**.
+- **Pauli-Y (σᵧ)**: Bit-and-phase-flip gate; a 180° rotation around the Y axis, mapping **|0⟩ ↔ i|1⟩** up to global phase.
+- **Pauli-Z (σ𝓏)**: Phase-flip gate; a 180° rotation around the Z axis, exchanging **|+⟩ ↔ |−⟩**.
+- **Phase gate (S)**: A 90° rotation around the Z axis with matrix **S = diag(1, i)**.
+- **Axis rotations (Rₓ, Rᵧ, R𝓏)**: Exact continuous rotations generated by the Pauli matrices:
 
-  $$
-  R_n(\theta) = \exp\left(-i\frac{\theta}{2}\vec{n}\cdot\vec{\sigma}\right)
-  = \cos\left(\frac{\theta}{2}\right)I - i\sin\left(\frac{\theta}{2}\right)(\vec{n}\cdot\vec{\sigma})
-  $$
+  **Rₙ(θ) = cos(θ/2)I − i·sin(θ/2)(n⃗ · σ⃗ )**
 
 ---
 
@@ -86,7 +82,7 @@ Quantum logic gates are $2 \times 2$ unitary operators ($U^\dagger U = I$) that 
 The simulator is divided into three core views:
 
 1. **Left Panel — 3D Bloch Sphere**: Orbit around the sphere with your mouse or finger, view the cardinal axes, and watch the gold state-vector arrow update instantly. Click **MATRICES** to open the reference modal for gate matrices.
-2. **Middle Panel — Quantum Gates**: Clearly lists the applied sequence trail (`|0⟩ —H→ |+⟩ —Rz→ ...`) and provides buttons with their unitary matrices for $H$, $\sigma_x$, $\sigma_y$, $\sigma_z$, $S$, and the rotation gates.
+2. **Middle Panel — Quantum Gates**: Clearly lists the applied sequence trail (`|0⟩ —H→ |+⟩ —Rz→ ...`) and provides buttons with their unitary matrices for H, σₓ, σᵧ, σ𝓏, S, and the rotation gates.
 3. **Right Panel — Math Breakdown**: Shows the worked-out algebraic derivation for every click, including the exact input state, matrix multiplication, and final state.
 
 ---
@@ -97,7 +93,7 @@ To guarantee that the simulator is faithful to textbook quantum mechanics:
 
 - Every gate matrix displayed on the screen is dynamically extracted from the source code.
 - Each gate is checked against analytical formulas for exact matrix equality.
-- The simulator is evaluated across **all 66 gate $\times$ cardinal-state transitions** for unit norm and fidelity up to global phase.
+- The simulator is evaluated across **all 66 gate × cardinal-state transitions** for unit norm and fidelity up to global phase.
 - The app passes all **94 mathematical checks**.
 
 ```bash
@@ -105,7 +101,8 @@ cd frontend
 npm run verify
 # ✔ Displayed gate matrices match their analytic formulas exactly (11 gates).
 # ✔ 66 gate × cardinal-state transitions verified up to global phase.
-# ✔ All displayed matrices are unitary; S = e^{i\pi/4}\cdot R_z(\pi/2) and S^\dagger = e^{-i\pi/4}\cdot R_z(-\pi/2).
+# ✔ All displayed matrices are unitary.
+# ✔ S = eⁱπ⁄⁴ · R𝓏(π/2) and S† = e⁻ⁱπ⁄⁴ · R𝓏(−π/2).
 # 94 checks passed.
 ```
 
@@ -115,7 +112,7 @@ npm run verify
 
 - **React 19 + Vite**: Ultra-fast component lifecycle and build system.
 - **Three.js + @react-three/fiber + @react-three/drei**: WebGL-accelerated 3D rendering with smooth orbit controls.
-- **react-katex + KaTeX**: High-fidelity $\mathrm{\LaTeX}$ mathematical typesetting for matrices and formulas.
+- **react-katex + KaTeX**: High-fidelity mathematical typesetting for matrices and formulas.
 - **Tailwind CSS v4 + Custom Modular CSS**: High-performance UI styling with strict layer scoping.
 - **GitHub Actions**: Automated CI/CD pipeline deploying each release to GitHub Pages on every push to `main`.
 
