@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import TextbookMatrix from "./TextbookMatrix";
+import QuantumGatesReference from "./QuantumGatesReference";
 
 const CARDINAL_STATES = [
   {
@@ -164,39 +165,6 @@ const QUANTUM_GATES = [
     instances: "T = diag(1, e^{iπ/4}) = e^{iπ/8}·Rz(π/4)",
     role: "Applies a π/4 (45°) rotation around the Z-axis. Reference only — T is not simulated in Phase 1 (its half-angle phase is outside the exact 45° grid the calculator covers).",
   },
-  {
-    name: "X-Axis Rotation",
-    symbol: <>R<sub>x</sub>(θ)</>,
-    scalar: null,
-    matrix: [
-      ["cos(θ/2)", "-i sin(θ/2)"],
-      ["-i sin(θ/2)", "cos(θ/2)"],
-    ],
-    instances: "θ = +π/2 → (1/√2)[[1, −i], [−i, 1]]   |   θ = −π/2 → (1/√2)[[1, i], [i, 1]]",
-    role: "Rotates the Bloch vector by θ around X. The two simulator buttons Rx and Rx use exactly the θ = ±π/2 matrices listed above.",
-  },
-  {
-    name: "Y-Axis Rotation",
-    symbol: <>R<sub>y</sub>(θ)</>,
-    scalar: null,
-    matrix: [
-      ["cos(θ/2)", "-sin(θ/2)"],
-      ["sin(θ/2)", "cos(θ/2)"],
-    ],
-    instances: "θ = +π/2 → (1/√2)[[1, −1], [1, 1]]   |   θ = −π/2 → (1/√2)[[1, 1], [−1, 1]]",
-    role: "Rotates the Bloch vector by θ around Y. The two simulator buttons Ry and Ry use exactly the θ = ±π/2 matrices listed above.",
-  },
-  {
-    name: "Z-Axis Rotation",
-    symbol: <>R<sub>z</sub>(θ)</>,
-    scalar: null,
-    matrix: [
-      ["e^{-iθ/2}", "0"],
-      ["0", "e^{iθ/2}"],
-    ],
-    instances: "θ = +π/2 → diag(e^{−iπ/4}, e^{iπ/4})   |   θ = −π/2 → diag(e^{iπ/4}, e^{−iπ/4})",
-    role: "Rotates the Bloch vector by θ around Z. The simulator's Rz(±π/2) buttons display exactly these θ = ±π/2 matrices — not the S / S† matrices. Since S = e^{iπ/4}·Rz(π/2), the two agree as physical rotations and differ only by a global phase, which the calculation panel states explicitly for every step.",
-  },
 ];
 
 export function MatricesModal({ isOpen, onClose }) {
@@ -304,11 +272,11 @@ export function MatricesModal({ isOpen, onClose }) {
             </div>
           </div>
 
-          {/* Section 3: Essential Quantum Logic Gates */}
+          {/* Section 3: Essential Quantum Logic Gates + Rotation Reference */}
           <div className="modal-section">
             <div className="section-title-row">
               <span className="section-number">03</span>
-              <h3 className="section-heading">Standard Single-Qubit Gates & Rotation Matrices</h3>
+              <h3 className="section-heading">Standard Single-Qubit Gates</h3>
             </div>
             <p className="section-desc">
               Unitary transformations (U†U = I) that rotate state vectors across the Bloch sphere. A global phase does not change the physical Bloch-vector direction.
@@ -332,6 +300,9 @@ export function MatricesModal({ isOpen, onClose }) {
                 </div>
               ))}
             </div>
+
+            {/* Rotation gates: formula first, then the evaluated button angles */}
+            <QuantumGatesReference />
           </div>
         </div>
 

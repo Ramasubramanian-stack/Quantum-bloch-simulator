@@ -135,8 +135,6 @@ const GATES = [
     group: "rotations",
     scalar: "1/√2",
     matrix: [["1", "-i"], ["-i", "1"]],
-    exactForm: "Rx(θ) = cos(θ/2)·I − i·sin(θ/2)·σx",
-    exactNote: "θ = +π/2 ⇒ (1/√2)[[1, −i], [−i, 1]] — exact textbook matrix, no phase correction needed.",
   },
   {
     id: "Rx-",
@@ -147,8 +145,6 @@ const GATES = [
     group: "rotations",
     scalar: "1/√2",
     matrix: [["1", "i"], ["i", "1"]],
-    exactForm: "Rx(θ) = cos(θ/2)·I − i·sin(θ/2)·σx",
-    exactNote: "θ = −π/2 ⇒ (1/√2)[[1, i], [i, 1]] — exact textbook matrix, no phase correction needed.",
   },
   {
     id: "Ry+",
@@ -159,8 +155,6 @@ const GATES = [
     group: "rotations",
     scalar: "1/√2",
     matrix: [["1", "-1"], ["1", "1"]],
-    exactForm: "Ry(θ) = cos(θ/2)·I − i·sin(θ/2)·σy",
-    exactNote: "θ = +π/2 ⇒ (1/√2)[[1, −1], [1, 1]] — exact textbook matrix, no phase correction needed.",
   },
   {
     id: "Ry-",
@@ -171,8 +165,6 @@ const GATES = [
     group: "rotations",
     scalar: "1/√2",
     matrix: [["1", "1"], ["-1", "1"]],
-    exactForm: "Ry(θ) = cos(θ/2)·I − i·sin(θ/2)·σy",
-    exactNote: "θ = −π/2 ⇒ (1/√2)[[1, 1], [−1, 1]] — exact textbook matrix, no phase correction needed.",
   },
   {
     id: "Rz+",
@@ -185,8 +177,6 @@ const GATES = [
     // Exact textbook matrix: Rz(θ) = diag(e^{-iθ/2}, e^{iθ/2}) at θ = +π/2.
     // This is NOT the S gate: S = diag(1, i) = e^{iπ/4}·Rz(π/2).
     matrix: [["e^{-iπ/4}", "0"], ["0", "e^{iπ/4}"]],
-    exactForm: "Rz(θ) = diag( e^{−iθ/2}, e^{iθ/2} )",
-    exactNote: "θ = +π/2 ⇒ diag( e^{−iπ/4}, e^{iπ/4} ) — exact. Equal to S up to the global phase e^{iπ/4}.",
   },
   {
     id: "Rz-",
@@ -199,8 +189,6 @@ const GATES = [
     // Rz(θ) = diag(e^{-iθ/2}, e^{iθ/2}) at θ = −π/2.
     // This is NOT S†: S† = diag(1, −i) = e^{-iπ/4}·Rz(−π/2).
     matrix: [["e^{iπ/4}", "0"], ["0", "e^{-iπ/4}"]],
-    exactForm: "Rz(θ) = diag( e^{−iθ/2}, e^{iθ/2} )",
-    exactNote: "θ = −π/2 ⇒ diag( e^{iπ/4}, e^{−iπ/4} ) — exact. Equal to S† up to the global phase e^{−iπ/4}.",
   },
 ];
 

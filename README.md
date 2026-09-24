@@ -38,6 +38,10 @@ multiplication.
 - **Matrices Reference Modal** — a pop-up cheat sheet with state vectors,
   density matrices (`ρ = |ψ⟩⟨ψ|`), Pauli operators, standard gates, and the
   general `|ψ(θ, φ)⟩` parameterization.
+- **Quantum Gates Reference Window** — inside the MATRICES modal: for Rx, Ry,
+  and Rz the exact algebraic formula (typeset with KaTeX), directly followed by
+  the θ = ±π/2 matrices the simulator buttons actually apply, plus a short
+  "Why it works" note connecting the two — formula first, numbers second.
 - **Physically Verified Math** — `npm run verify` parses the matrices the UI
   actually displays out of `src/App.jsx`, compares them exactly against the
   analytic rotation formulas, then checks all 66 gate × cardinal-state
@@ -112,6 +116,7 @@ quantum-bloch-simulator/
 │   │   ├── App.jsx            # State machine, gate transitions, math history
 │   │   ├── BlochSphere.jsx    # 3D sphere, axes, state-vector arrow
 │   │   ├── MatricesModal.jsx  # Reference modal (states, ρ matrices, gates)
+│   │   ├── QuantumGatesReference.jsx # Formula → θ=±π/2 instances → why (Tailwind + KaTeX)
 │   │   ├── TextbookMatrix.jsx # Bracketed matrix renderer
 │   │   └── App.css            # All styling
 │   ├── scripts/
@@ -126,7 +131,11 @@ quantum-bloch-simulator/
 
 - **React 19** + **Vite** — UI and build tooling
 - **Three.js** + **@react-three/fiber** + **@react-three/drei** — 3D rendering
-- Plain CSS (no UI framework) — simple, hackable styling
+- **Tailwind CSS v4** — utilities only (theme + utilities layers; the preflight
+  layer is intentionally excluded so it cannot restyle the app) for the
+  Quantum Gates Reference Window
+- **react-katex** + **KaTeX** — real typeset math (formulas and matrices)
+- Plain CSS (no UI framework) for everything else — simple, hackable styling
 
 ## 🗺️ Roadmap
 

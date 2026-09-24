@@ -149,8 +149,8 @@ body, html, #root {
    2. MIDDLE PANEL — QUANTUM GATES (SQUARE BUTTONS + MATRICES)
    ========================================================================== */
 .middle-panel {
-  width: 390px;
-  min-width: 350px;
+  width: 470px;
+  min-width: 420px;
   display: flex;
   flex-direction: column;
   padding: 16px;
@@ -311,7 +311,7 @@ body, html, #root {
    ========================================================================== */
 .right-panel {
   flex: 1.4;
-  min-width: 440px;
+  min-width: 400px;
   display: flex;
   flex-direction: column;
   padding: 16px;

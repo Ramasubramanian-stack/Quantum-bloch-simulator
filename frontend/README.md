@@ -31,6 +31,7 @@ npm run verify  # independently verify the taught gate and rotation math
 | `src/App.jsx`          | App shell, qubit state machine, gate transition map, math history  |
 | `src/BlochSphere.jsx`  | Three.js / React Three Fiber Bloch sphere, axes, and state arrow   |
 | `src/MatricesModal.jsx`| Pop-up reference: state vectors, density matrices, gate matrices   |
+| `src/QuantumGatesReference.jsx` | Quantum Gates Reference Window (Tailwind + react-katex): formula → θ = ±π/2 instances → why |
 | `src/TextbookMatrix.jsx`| Renders bracketed textbook-style matrices with optional scalars   |
 | `src/App.css`          | All panel, matrix, modal, and tracker styling                      |
 | `scripts/verify-pauli-gates.mjs` | `npm run verify` — checks displayed matrices vs their formulas |
@@ -44,10 +45,13 @@ npm run verify  # independently verify the taught gate and rotation math
 ## Notation & Conventions
 
 - **Buttons display their true textbook matrix.** Each gate button shows the
-  matrix that is actually applied, with its general formula printed beside it
-  (`Rx(θ) = cos(θ/2)I − i·sin(θ/2)σx`, `Ry(θ) = cos(θ/2)I − i·sin(θ/2)σy`,
-  `Rz(θ) = diag(e^{−iθ/2}, e^{iθ/2})`). Never display a different matrix than
-  the one being applied, even if the two agree up to a global phase.
+  matrix that is actually applied — never display a different matrix than the
+  one being applied, even if the two agree up to a global phase. The Rotations
+  group keeps it minimal (gate label + matrix only); the general formulas
+  (`Rx(θ) = cos(θ/2)I − i·sin(θ/2)σx`, likewise for Y, and
+  `Rz(θ) = diag(e^{−iθ/2}, e^{iθ/2})`) live in the **Quantum Gates Reference
+  Window** inside the MATRICES modal, which walks formula → evaluated θ = ±π/2
+  instances → why they are equal.
 - **`Rz(±π/2)` is not `S`/`S†`.** `S = diag(1, i) = e^{iπ/4}·Rz(π/2)`. The Rz
   buttons carry the exact phase-factor matrices; `S` keeps its own matrix. The
   calculation panel reports the `e^{∓iπ/4}` global phase for Rz steps, the same

@@ -1,0 +1,7 @@
+/* Tailwind for the Quantum Gates Reference Window only.
+   Only the theme layer (pure CSS variables — no element selectors) and the
+   utilities layer are imported. The preflight/base layer is deliberately
+   skipped so Tailwind can never restyle the rest of this application. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme" layer(theme);
+@import "tailwindcss/utilities" layer(utilities);
