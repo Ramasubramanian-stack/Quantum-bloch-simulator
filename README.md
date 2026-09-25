@@ -53,10 +53,10 @@ This maps directly to a point (x, y, z) on the unit 3D sphere:
 
 ### 3. The 6 Cardinal States
 
-The simulator tracks and identifies the fundamental cardinal states on the sphere’s poles and equator:
-
 ```math
-\(\begin{aligned} \lvert 0 \rangle &= \begin{bmatrix} 1 \\ 0 \end{bmatrix} && \text{North pole (+Z). The default ground state.} \\ \lvert 1 \rangle &= \begin{bmatrix} 0 \\ 1 \end{bmatrix} && \text{South pole (−Z). The excited state.} \\ \lvert + \rangle &= \frac{\lvert 0 \rangle + \lvert 1 \rangle}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1 \end{bmatrix} && \text{+X axis. Equal superposition state and eigenstate of Pauli-X.} \\ \lvert - \rangle &= \frac{\lvert 0 \rangle - \lvert 1 \rangle}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ -1 \end{bmatrix} && \text{−X axis. Superposition with a } \pi \text{ phase difference.} \\ \lvert +i \rangle &= \frac{\lvert 0 \rangle + i\lvert 1 \rangle}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ i \end{bmatrix} && \text{+Y axis. Circular phase state and eigenstate of Pauli-Y.} \\ \lvert -i \rangle &= \frac{\lvert 0 \rangle - i\lvert 1 \rangle}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ -i \end{bmatrix} && \text{−Y axis. Opposite circular phase state.} \end{aligned} \%\%\)MAGIT_PARSER_PROTECT%%```
+\(\begin{aligned} \vert{}0\rangle &= \begin{bmatrix} 1 \\ 0 \end{bmatrix} && \text{North pole (+Z). The default ground state.} \\ \vert{}1\rangle &= \begin{bmatrix} 0 \\ 1 \end{bmatrix} && \text{South pole (−Z). The excited state.} \\\)
+
+\(\vert{}+\rangle &= \frac{\vert{}0\rangle + \vert{}1\rangle}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1 \end{bmatrix} && \text{+X axis. Equal superposition state and eigenstate of Pauli-X.} \\ \vert{}-\rangle &= \frac{\vert{}0\rangle - \vert{}1\rangle}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ -1 \end{bmatrix} && \text{−X axis. Superposition with a } \pi \text{ phase difference.} \\ \vert{}+i\rangle &= \frac{\vert{}0\rangle + i\vert{}1\rangle}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ i \end{bmatrix} && \text{+Y axis. Circular phase state and eigenstate of Pauli-Y.} \\ \vert{}-i\rangle &= \frac{\vert{}0\rangle - i\vert{}1\rangle}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ -i \end{bmatrix} && \text{−Y axis. Opposite circular phase state.} \end{aligned} \%\%\)MAGIT_PARSER_PROTECT%%
 ```
 
 ### 4. Quantum Gates as Rotations
