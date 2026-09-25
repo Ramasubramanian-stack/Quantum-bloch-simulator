@@ -57,11 +57,11 @@ The simulator tracks and identifies the fundamental cardinal states on the spher
 
 ```math
 \begin{aligned} 
-\vert 0 \rangle &= \begin{bmatrix} 1 \\ 0 \end{bmatrix} && \text{North pole (+Z). The default ground state.} \\[10pt]
-\vert 1 \rangle &= \begin{bmatrix} 0 \\ 1 \end{bmatrix} && \text{South pole (−Z). The excited state.} \\[10pt]
-\vert + \rangle &= \frac{\vert 0 \rangle + \vert 1 \rangle}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1 \end{bmatrix} && \text{+X axis. Equal superposition state and eigenstate of Pauli-X.} \\[10pt]
-\vert - \rangle &= \frac{\vert 0 \rangle - \vert 1 \rangle}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ -1 \end{bmatrix} && \text{−X axis. Superposition with a } \pi \text{ phase difference.} \\[10pt]
-\vert +i \rangle &= \frac{\vert 0 \rangle + i\vert 1 \rangle}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ i \end{bmatrix} && \text{+Y axis. Circular phase state and eigenstate of Pauli-Y.} \\[10pt]
+\vert 0 \rangle &= \begin{bmatrix} 1 \\ 0 \end{bmatrix} && \text{North pole (+Z). The default ground state.} \\[20pt]
+\vert 1 \rangle &= \begin{bmatrix} 0 \\ 1 \end{bmatrix} && \text{South pole (−Z). The excited state.} \\[20pt]
+\vert + \rangle &= \frac{\vert 0 \rangle + \vert 1 \rangle}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1 \end{bmatrix} && \text{+X axis. Equal superposition state and eigenstate of Pauli-X.} \\[20pt]
+\vert - \rangle &= \frac{\vert 0 \rangle - \vert 1 \rangle}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ -1 \end{bmatrix} && \text{−X axis. Superposition with a } \pi \text{ phase difference.} \\[20pt]
+\vert +i \rangle &= \frac{\vert 0 \rangle + i\vert 1 \rangle}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ i \end{bmatrix} && \text{+Y axis. Circular phase state and eigenstate of Pauli-Y.} \\[20pt]
 \vert -i \rangle &= \frac{\vert 0 \rangle - i\vert 1 \rangle}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ -i \end{bmatrix} && \text{−Y axis. Opposite circular phase state.}
 \end{aligned}
 ```
