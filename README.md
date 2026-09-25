@@ -31,11 +31,7 @@ Quantum mechanics and quantum computing are notoriously counter-intuitive for ne
 
 In classical computing, a bit is strictly 0 or 1. A single qubit exists as a pure quantum state in a 2D complex Hilbert space:
 
-**|ψ⟩ = α|0⟩ + β|1⟩**, written as a column vector:
-
-$$
-|\psi\rangle = \begin{bmatrix} \alpha \\ \beta \end{bmatrix}
-$$
+**|ψ⟩ = α|0⟩ + β|1⟩ = [ α, β ]ᵀ**
 
 Here, α and β are complex numbers, and **|α|² + |β|² = 1**. This is the normalization rule: the total probability must equal 1.
 
@@ -59,12 +55,12 @@ This maps directly to a point (x, y, z) on the unit 3D sphere:
 
 The simulator tracks and identifies the fundamental cardinal states on the sphere’s poles and equator:
 
-- **|0⟩** = $\begin{bmatrix} 1 \\ 0 \end{bmatrix}$ : North pole (+Z). The default ground state.
-- **|1⟩** = $\begin{bmatrix} 0 \\ 1 \end{bmatrix}$ : South pole (−Z). The excited state.
-- **|+⟩** = (|0⟩ + |1⟩)/√2 = $\dfrac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1 \end{bmatrix}$ : +X axis. Equal superposition state and eigenstate of Pauli-X.
-- **|−⟩** = (|0⟩ − |1⟩)/√2 = $\dfrac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ -1 \end{bmatrix}$ : −X axis. Superposition with a π phase difference.
-- **|+i⟩** = (|0⟩ + i|1⟩)/√2 = $\dfrac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ i \end{bmatrix}$ : +Y axis. Circular phase state and eigenstate of Pauli-Y.
-- **|−i⟩** = (|0⟩ − i|1⟩)/√2 = $\dfrac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ -i \end{bmatrix}$ : −Y axis. Opposite circular phase state.
+- **|0⟩ = [1, 0]ᵀ**: North pole (+Z). The default ground state.
+- **|1⟩ = [0, 1]ᵀ**: South pole (−Z). The excited state.
+- **|+⟩ = (|0⟩ + |1⟩)/√2 = [1, 1]ᵀ/√2**: +X axis. Equal superposition state and eigenstate of Pauli-X.
+- **|−⟩ = (|0⟩ − |1⟩)/√2 = [1, −1]ᵀ/√2**: −X axis. Superposition with a π phase difference.
+- **|+i⟩ = (|0⟩ + i|1⟩)/√2 = [1, i]ᵀ/√2**: +Y axis. Circular phase state and eigenstate of Pauli-Y.
+- **|−i⟩ = (|0⟩ − i|1⟩)/√2 = [1, −i]ᵀ/√2**: −Y axis. Opposite circular phase state.
 
 ### 4. Quantum Gates as Rotations
 
