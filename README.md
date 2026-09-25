@@ -82,7 +82,7 @@ Quantum logic gates are 2 × 2 unitary operators satisfying **U†U = I**. They 
 The simulator is divided into three core views:
 
 1. **Left Panel — 3D Bloch Sphere**: Orbit around the sphere with your mouse or finger, view the cardinal axes, and watch the gold state-vector arrow update instantly. Click **MATRICES** to open the reference modal for gate matrices.
-2. **Middle Panel — Quantum Gates**: Clearly lists the applied sequence trail (`|0⟩ —H→ |+⟩ —Rz→ ...`) and provides buttons with their unitary matrices for H, σₓ, σᵧ, σ𝓏, S, and the rotation gates.
+2. **Middle Panel — Quantum Gates**: Clearly lists the applied sequence trail and provides buttons with their unitary matrices for H, σₓ, σᵧ, σ𝓏, S, and the rotation gates.
 3. **Right Panel — Math Breakdown**: Shows the worked-out algebraic derivation for every click, including the exact input state, matrix multiplication, and final state.
 
 ---
