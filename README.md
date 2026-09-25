@@ -12,7 +12,7 @@
 
 Quantum mechanics and quantum computing are notoriously counter-intuitive for newcomers. Beginners usually encounter two disconnected worlds:
 
-1. **Abstract linear algebra**: 2 × 2 unitary matrices, state vectors in complex Hilbert space C², and symbols such as `|ψ⟩ = α|0⟩ + β|1⟩` that feel foreign and abstract.
+1. **Abstract linear algebra**: 2 × 2 unitary matrices, state vectors in complex Hilbert space C², and symbols such as   `|ψ⟩ = α|0⟩ + β|1⟩` that feel foreign and abstract.
 2. **Abstract analogies**: Popular explanations like “a qubit is both 0 and 1 at the same time” often hide the actual mathematical rules and make quantum computing seem mystical.
 
 ### Why This Tool Is Built Specifically for Beginners
