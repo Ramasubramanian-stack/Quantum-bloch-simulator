@@ -10,9 +10,11 @@
    ROTATION MATRIX NOTATION (Rx / Ry / Rz reference cards)
    Deliberately unlayered (like the rest of the app's custom classes) so it
    always wins over the Tailwind utilities layer above, regardless of source
-   order. Mirrors the bracket technique used by .textbook-matrix in App.css:
-   the literal "[" / "]" glyphs in the JSX are hidden and replaced with
-   drawn border-brackets so the layout never depends on font glyph metrics.
+   order.
+
+   Two bracket styles, matching textbook convention:
+   - "round" ( )  — symbolic/general formula matrices (cos, sin, e^{iθ/2}...)
+   - "square" [ ] — concrete numeric matrices (the evaluated θ=±π/2 instances)
    ========================================================================== */
 .rotation-matrix-wrap {
   display: inline-flex;
@@ -32,42 +34,6 @@
   display: inline-flex;
   position: relative;
   align-items: center;
-  padding: 6px 10px;
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 2px;
-}
-
-.rotation-matrix-bracket {
-  /* Real "[" / "]" characters are kept in the DOM for context but hidden
-     visually; the box's ::before/::after pseudo-elements draw the bracket
-     so height always matches the grid regardless of font/line-height. */
-  display: none;
-}
-
-.rotation-matrix-box::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 6px;
-  border-left: 2.5px solid #e2e8f0;
-  border-top: 2.5px solid #e2e8f0;
-  border-bottom: 2.5px solid #e2e8f0;
-  border-radius: 2px 0 0 2px;
-}
-
-.rotation-matrix-box::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 6px;
-  border-right: 2.5px solid #e2e8f0;
-  border-top: 2.5px solid #e2e8f0;
-  border-bottom: 2.5px solid #e2e8f0;
-  border-radius: 0 2px 2px 0;
 }
 
 .rotation-matrix-grid {
@@ -82,4 +48,61 @@
 
 .rotation-matrix-cell {
   white-space: nowrap;
+}
+
+/* --- Square brackets: numeric instances ---
+   Real "[" / "]" characters are kept in the DOM for context but hidden
+   visually; the box's ::before/::after pseudo-elements draw the bracket
+   so height always matches the grid regardless of font/line-height. */
+.rotation-matrix-box--square {
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 2px;
+}
+
+.rotation-matrix-box--square .rotation-matrix-bracket {
+  display: none;
+}
+
+.rotation-matrix-box--square::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  border-left: 2.5px solid #e2e8f0;
+  border-top: 2.5px solid #e2e8f0;
+  border-bottom: 2.5px solid #e2e8f0;
+  border-radius: 2px 0 0 2px;
+}
+
+.rotation-matrix-box--square::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  border-right: 2.5px solid #e2e8f0;
+  border-top: 2.5px solid #e2e8f0;
+  border-bottom: 2.5px solid #e2e8f0;
+  border-radius: 0 2px 2px 0;
+}
+
+/* --- Round parentheses: symbolic general formulas ---
+   No filled box — a genuine "(" / ")" glyph is stretched to hug the grid's
+   height, which is how textbooks set a symbolic matrix apart from a
+   concrete one. */
+.rotation-matrix-box--round {
+  padding: 0 2px;
+}
+
+.rotation-matrix-box--round .rotation-matrix-bracket {
+  display: inline-block;
+  font-size: 2.6em;
+  font-weight: 200;
+  line-height: 0.9;
+  color: #e2e8f0;
+  transform: scaleY(1.15);
 }

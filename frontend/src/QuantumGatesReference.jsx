@@ -13,29 +13,39 @@ const matrixCell = (children, className = "") => (
   <span className={`rotation-matrix-cell ${className}`}>{children}</span>
 );
 
-function Matrix({ factor, rows, ariaLabel }) {
+// bracket: "round" for symbolic/general formulas (textbook convention),
+// "square" (default) for concrete numeric instances.
+function Matrix({ factor, rows, ariaLabel, bracket = "square" }) {
+  const glyph = bracket === "round" ? ["(", ")"] : ["[", "]"];
   return (
     <div className="rotation-matrix-wrap" role="img" aria-label={ariaLabel}>
       {factor && <span className="rotation-matrix-factor">{factor}</span>}
-      <span className="rotation-matrix-bracket rotation-matrix-left">[</span>
-      <span className="rotation-matrix-grid">
-        {rows.flatMap((row, rowIndex) =>
-          row.map((cell, columnIndex) => (
-            <React.Fragment key={`${rowIndex}-${columnIndex}`}>
-              {matrixCell(cell)}
-            </React.Fragment>
-          )),
-        )}
+      <span className={`rotation-matrix-box rotation-matrix-box--${bracket}`}>
+        <span className="rotation-matrix-bracket rotation-matrix-left" aria-hidden="true">
+          {glyph[0]}
+        </span>
+        <span className="rotation-matrix-grid">
+          {rows.flatMap((row, rowIndex) =>
+            row.map((cell, columnIndex) => (
+              <React.Fragment key={`${rowIndex}-${columnIndex}`}>
+                {matrixCell(cell)}
+              </React.Fragment>
+            )),
+          )}
+        </span>
+        <span className="rotation-matrix-bracket rotation-matrix-right" aria-hidden="true">
+          {glyph[1]}
+        </span>
       </span>
-      <span className="rotation-matrix-bracket rotation-matrix-right">]</span>
     </div>
   );
 }
 
-function DiagonalMatrix({ entries, ariaLabel }) {
+function DiagonalMatrix({ entries, ariaLabel, bracket }) {
   return (
     <Matrix
       ariaLabel={ariaLabel}
+      bracket={bracket}
       rows={[
         [entries[0], "0"],
         ["0", entries[1]],
@@ -50,10 +60,11 @@ const ROTATION_GATES = [
     title: "Rₓ(θ) — rotation about the X axis",
     general: (
       <Matrix
+        bracket="round"
         ariaLabel="Rx theta equals the two by two matrix with cos theta over 2 on the diagonal and negative i sine theta over 2 off the diagonal"
         rows={[
-          [<>cos({HALF_ANGLE})</>, <>−i · sin({HALF_ANGLE})</>],
-          [<>−i · sin({HALF_ANGLE})</>, <>cos({HALF_ANGLE})</>],
+          [<>cos({HALF_ANGLE})</>, <>−i sin({HALF_ANGLE})</>],
+          [<>−i sin({HALF_ANGLE})</>, <>cos({HALF_ANGLE})</>],
         ]}
       />
     ),
@@ -76,6 +87,7 @@ const ROTATION_GATES = [
     title: "Rᵧ(θ) — rotation about the Y axis",
     general: (
       <Matrix
+        bracket="round"
         ariaLabel="Ry theta equals the two by two matrix with cos theta over 2 on the diagonal"
         rows={[
           [<>cos({HALF_ANGLE})</>, <>−sin({HALF_ANGLE})</>],
@@ -103,6 +115,7 @@ const ROTATION_GATES = [
     title: "R𝓏(θ) — rotation about the Z axis",
     general: (
       <DiagonalMatrix
+        bracket="round"
         entries={[<>e<sup>−iθ/2</sup></>, <>e<sup>iθ/2</sup></>]}
         ariaLabel="Rz theta equals diagonal e to the negative i theta over two and e to the i theta over two"
       />
